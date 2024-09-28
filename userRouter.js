@@ -4,14 +4,21 @@ const userRouter=Router()
 const {UserModel,GameModel}=require('./Schema')
 const jwt=require('jsonwebtoken')
 const passkey=process.env.USERPASSKEY
-
+const cheking=require('./Validation/cheking')
 
 userRouter.post('/signup',async(req,res)=>{
       const username=req.body.username
       const email=req.body.email;
       const password=req.body.password;
       const phonenumber=req.body.phonenumber;
+      const validation = cheking.safeParse(req.body);
 
+      if (!validation.success) {
+        return res.status(400).json({
+          message: "Invalid format",
+          errors: validation.error.errors.map((err) => err.message), // Return detailed errors
+        });
+      }
 
       try{
       await UserModel.create({
