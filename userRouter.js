@@ -66,34 +66,6 @@ userRouter.put('/updatedata',async(req,res)=>{
     return res.send("Updated data successfully");
 })
 
-userRouter.get('/sports',async(req,res)=>{
-    //this route is responsible for getting the games data based on the chosen games and location
-    const game=req.body.game;
-    const location=req.body.location;
-    const venue=req.body.venue;
-    const time=req.body.time;
-    const isCreated=req.body.isCreated;
-    try{
-
-    const games=await GameModel.find({game,location,venue,time})
-    res.json({games:games})
-    }
-    catch(err){
-        return res.json({msg:err.message})
-    }
-})
-
-userRouter.get('/owngames',async(req,res)=>{
-    //This route is responsible for getting the user posted games and not others
-    const id=req.id;
-    try{
-        const games=await GameModel.find({userid:id,isCreated:true})
-        res.json({games:games})
-    }
-    catch(err){
-        return res.json({msg:err.message})
-    }
-})
 
 userRouter.post('/newgame',async(req,res)=>{
     const id=req.id;
@@ -123,6 +95,39 @@ userRouter.post('/newgame',async(req,res)=>{
  }
 
 })
+
+
+
+userRouter.get('/sports',async(req,res)=>{
+    //this route is responsible for getting the games data based on the chosen games and location
+    const game=req.body.game;
+    const location=req.body.location;
+    const venue=req.body.venue;
+    const time=req.body.time;
+    const isCreated=req.body.isCreated;
+    try{
+
+    const games=await GameModel.find({game,location,venue,time})
+    res.json({games:games})
+    }
+    catch(err){
+        return res.json({msg:err.message})
+    }
+})
+
+userRouter.get('/owngames',async(req,res)=>{
+    //This route is responsible for getting the user posted games and not others
+    const id=req.id;
+    try{
+        const games=await GameModel.find({userid:id,isCreated:true})
+        res.json({games:games})
+    }
+    catch(err){
+        return res.json({msg:err.message})
+    }
+})
+
+
 
 
 module.exports={userRouter}
