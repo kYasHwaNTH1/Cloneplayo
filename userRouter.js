@@ -32,13 +32,14 @@ userRouter.post('/signin',async(req,res)=>{
 
     try{
         const user=await UserModel.findOne({email:email})
+        console.log(user)
         if(!user){
             return res.json({msg:"No user found with the email"})
         }
        if(user.password!==password){
         return res.json({msg:"Incorrect Credentials"})
        }
-       const token=jwt.sign({id:user_id},passkey)
+       const token=jwt.sign({id:user._id},passkey)
 
        return res.json({
         msg:"Login successful",
@@ -46,7 +47,9 @@ userRouter.post('/signin',async(req,res)=>{
        })
     }
     catch(err){
-        return res.json({msg:err.message})
+        return res.json({msg:err.message,
+            "e":"from catch block"
+        })
     }
 })
 
@@ -95,7 +98,7 @@ userRouter.get('/owngames',async(req,res)=>{
 userRouter.post('/newgame',async(req,res)=>{
     const id=req.id;
     const game=req.body.game;
-    const startDate=req.body.Date.now();
+    const startDate=new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
     const startTimings=req.body.startTimings;
     const endTimings=req.body.endTimings;
     const location=req.body.location;
@@ -120,3 +123,6 @@ userRouter.post('/newgame',async(req,res)=>{
  }
 
 })
+
+
+module.exports={userRouter}

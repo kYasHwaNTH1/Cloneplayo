@@ -4,12 +4,12 @@ const cors=require('cors')
 require('dotenv').config()
 const mongoose=require('mongoose')
 const axios=require('axios')
-
+const {userRouter}=require('./userRouter')
 
 app.use(express.json())
 app.use(cors())
 
-app.use('/api')
+app.use('/api',userRouter);
 
 function main(){
     mongoose.connect(process.env.MONGODBURL)

@@ -2,23 +2,23 @@ const { time } = require('console');
 const mongoose=require('mongoose');
 const { required } = require('nodemon/lib/config');
 const Schema=mongoose.Schema;
-const objectId=mongoose.Types.objectId
+const objectId=mongoose.Types.ObjectId
 
 const UserSchema=new Schema({
-    username:String,
+    username:{type:String,required:true},
     email:{type:String,unique:true},
-    password:String,
+    password:{type:String,required:true},
     phonenumber:{type:String,default:""}
 })
 
 const GameSchema=new Schema({
-      userid:objectId,
-      game:String,
-      startDate:Date,
-      startTimings:String,
-      endTimings:String,
-      isCreated:Boolean,
-      location:Object,
+      userid:{type:String,required:true},
+      game:{type:String,required:true},
+      startDate:{type:String,required:true},
+      startTimings:{type:String,required:true},
+      endTimings:{type:String,required:true},
+      isCreated:{type:String,required:true},
+      location:{type:String,required:true},
       venue:{type:String,default:""}
 })
 
